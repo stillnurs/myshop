@@ -4,3 +4,4 @@ __pycache__/
 *.sh
 *.env
 local_settings.py
+.gitignore
