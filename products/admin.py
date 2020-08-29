@@ -4,10 +4,13 @@ from .models import Category, Product
 
 # Register your models here.
 
-
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-	list_display = ['name', 'slug', 'created', 'status', 'price']
+	list_display = ['name', 'slug']
 	prepopulated_fields = {'slug': ('name',)}
 
 
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+	list_display = ['name', 'price', 'category', 'status', 'created']
+	prepopulated_fields = {'slug': ('name',)}
