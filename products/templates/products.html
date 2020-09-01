@@ -17,8 +17,8 @@
 				<li class="span3">
 					<div class="product-box">
 						<span class="sale_tag"></span>
-						<a href="product_detail.html"><img alt="" src="{{product.image.url}}"></a><br/>
-						<a href="product_detail.html" class="title">{{product.name}}</a><br/>
+						<a href="{{product.get_absolute_url}}"><img alt="" src="{{product.image.url}}"></a><br/>
+						<a href="{{product.get_absolute_url}}" class="title">{{product.name}}</a><br/>
 						<a href="#" class="category">{{product.category}}</a>
 						<p class="price">${{product.price}}</p>
 					</div>
@@ -42,13 +42,18 @@
 		<div class="span3 col">
 			<div class="block">
 				<ul class="nav nav-list">
-					<li class="nav-header">SUB CATEGORIES</li>
-					<li><a href="products.html">Nullam semper elementum</a></li>
-					<li class="active"><a href="products.html">Phasellus ultricies</a></li>
-					<li><a href="products.html">Donec laoreet dui</a></li>
-					<li><a href="products.html">Nullam semper elementum</a></li>
-					<li><a href="products.html">Phasellus ultricies</a></li>
-					<li><a href="products.html">Donec laoreet dui</a></li>
+					<li {% if not category %} class="nav-header" {% endif %}>
+						<a href="{% url 'product-list' %}">
+							Все товары
+						</a>
+					</li>
+					{% for i in categories %}
+					<li class="nav-header">
+						<a href="{{i.get_absolute_url}}">
+					    {{i.name}}
+						</a>
+					</li>
+					{% endfor %}
 				</ul>
 				<br/>
 				<ul class="nav nav-list below">

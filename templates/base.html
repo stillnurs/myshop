@@ -104,8 +104,35 @@
 			</section>
 
 			{% block content %}
-
+<div class="span3 col">
+			<div class="block">
+				<ul class="nav nav-list">
+					<li {% if not category %} class="nav-header" {% endif %}>
+						<a href="{% url 'product-list' %}">
+							Все товары
+						</a>
+					</li>
+					{% for i in categories %}
+					<li class="nav-header">
+						<a href="{{i.get_absolute_url}}">
+					    {{i.name}}
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+				<br/>
+				<ul class="nav nav-list below">
+					<li class="nav-header">MANUFACTURES</li>
+					<li><a href="products.html">Adidas</a></li>
+					<li><a href="products.html">Nike</a></li>
+					<li><a href="products.html">Dunlop</a></li>
+					<li><a href="products.html">Yamaha</a></li>
+				</ul>
+			</div>
 			{% endblock %}
+
+
+
 
 			<section class="our_client">
 				<h4 class="title"><span class="text">Manufactures</span></h4>
