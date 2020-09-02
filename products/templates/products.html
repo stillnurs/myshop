@@ -28,17 +28,32 @@
 			</ul>
 
 			<hr>
+
+
+			{% if is_paginated %}
 			<div class="pagination pagination-small pagination-centered">
 				<ul>
-					<li><a href="#">Prev</a></li>
-					<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">Next</a></li>
+					<li class="{% if not prev_url %} disabled {% endif %}">
+						<a href="{{prev_url}}" style="">Previous</a></li>
+
+					{% for i in products.paginator.page_range %}
+						{% if products.number == i %}
+						<li class="active">
+						<a href="?page={{i}}">{{i}}</a></li>
+
+						{% elif i > products.number|add:-3 and i < products.number|add:3 %}<li>
+						<a class="" href="?page={{i}}">{{i}}</a></li>
+
+						{% endif %}
+					{% endfor %}
+
+					<li class="{% if not next_url %} disabled {% endif %}">
+						<a href="{{next_url}}">Next</a></li>
 				</ul>
 			</div>
+			{% endif %}
 		</div>
+
 		<div class="span3 col">
 			<div class="block">
 				<ul class="nav nav-list">

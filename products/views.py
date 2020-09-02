@@ -1,6 +1,5 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
 from .models import Category, Product
 
 
@@ -8,14 +7,34 @@ def product_list(request, category_slug=None):  # category_slug is needed to cre
 	# if categories don't exist, it has to be None
 	category = None
 	categories = Category.objects.all()
-	products = Product.objects.filter(status=True)
-	if category_slug:   # if slug is not empty and user chooses any of categories
+	products = Product.objects.all()
+
+	if category_slug:  # if slug is not empty and user chooses any of categories
 		category = get_object_or_404(Category, slug=category_slug)  # we take category by slug
 		products = category.products.filter(category=category)  # we take all products from initial category
+
+	paginator = Paginator(products, 4)
+	page_number = request.GET.get('page', 1)
+	page = paginator.get_page(page_number)
+
+	is_paginated = page.has_other_pages()
+	if page.has_previous():
+		prev_url = '?page={}'.format(page.previous_page_number())
+	else:
+		prev_url = ''
+
+	if page.has_next():
+		next_url = '?page={}'.format(page.next_page_number())
+	else:
+		next_url = ''
+
 	context = {
+		'products': page,
+		'is_paginated': is_paginated,
+		'next_url': next_url,
+		'prev_url': prev_url,
 		'category': category,
 		'categories': categories,
-		'products': products,
 	}
 
 	return render(request, 'products.html', context)
