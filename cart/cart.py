@@ -6,7 +6,7 @@ from products.models import Product
 class Cart(object):
 	def __init__(self, request):
 
-		self.session = request.session  # reqests previous/existing sessions
+		self.session = request.session  # requests previous/existing sessions
 		cart = self.session.get(settings.CART_SESSION_ID)
 
 		if not cart:  # if session is empty, function initiates new session "cart"
