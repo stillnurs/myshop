@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'products',
     'cart',
     'orders',
+    'account'
 
 ]
 
@@ -84,10 +85,12 @@ WSGI_APPLICATION = 'store.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'shop_db',
         'USER': 'shop_admin',
         'PASSWORD': local_settings.DB_PASSWORD,
+        'HOST': 'localhost',
+        'PORT': 5432
     }
 }
 

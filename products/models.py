@@ -31,7 +31,7 @@ class Product(models.Model):
 	status = models.BooleanField(default=True)
 
 	class Meta:
-		ordering = ('-created',)
+		ordering = ('name',)
 		index_together = (('id', 'slug'),)
 		verbose_name = 'Продукт'
 		verbose_name_plural = 'Продукты'
