@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = local_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['nameless-badlands-27067.herokuapp.com', '127.0.0.1']
 
@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['nameless-badlands-27067.herokuapp.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'account',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     'products',
     'cart',
     'orders',
-    'account'
+
 
 ]
 
@@ -79,6 +80,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'store.wsgi.application'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

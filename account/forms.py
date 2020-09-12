@@ -1,31 +1,32 @@
 from django import forms
 from django.contrib.auth.models import User
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(label='Логин', widget=forms.TextInput(
         attrs={
             'placeholder': "Введите свой логин",
             'id': "username",
             'class': 'input-xlarge',
-    }))
+        }))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(
         attrs={
             'placeholder': "Введите ваш пароль",
             'id': "password",
             'class': "input-xlarge",
 
-    }))
+        }))
 
 
 class UserRegistrationForm(forms.ModelForm):
-    attributs = {
-            'placeholder': "Пароль",
-            'class': "input-xlarge"
+    attributes = {
+        'placeholder': "Пароль",
+        'class': "input-xlarge"
     }
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(
-        attrs=attributs))
-    password2 = forms.CharField(label='Повторите пароль',widget=forms.PasswordInput(
-        attrs=attributs))
+        attrs=attributes))
+    password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(
+        attrs=attributes))
 
     class Meta:
         model = User
@@ -36,11 +37,3 @@ class UserRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Ваши пароли не совпадают')
         return cd['password2']
-
-
-
-
-
-
-
-
