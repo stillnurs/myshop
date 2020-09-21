@@ -1,43 +1,31 @@
 from django.shortcuts import render, get_object_or_404
+from .models import Category,Product
+
 
 # Create your views here.
-from .models import Category, Product
-from django.core.paginator import Paginator
+from cart.forms import CartAddProductForm
 
 
-def product_list(request, category_slug=None):  # category_slug is needed to create categories URL
-    # if categories don't exist, it has to be None
+def product_list(request, category_slug=None): #category_slug  нужен для создание url категорий
+    #If categories don't exist,  it must be None
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(status=True)
-    if category_slug:  # if slug is not empty and user chooses any of categories
-        category = get_object_or_404(Category, slug=category_slug)  # we take category by slug
-        products = category.products.filter(category=category)  # we take all products from initial category
-    pages_data = Paginator(products, 2)
-    page_number = request.GET.get('page', 1)
-    page = pages_data.get_page(page_number)
-    is_paginated = page.has_other_pages()
-    if page.has_previous():
-        prev_url = '?page={}'.format(page.previous_page_number())
-    else:
-        prev_url = ''
-    if page.has_next():
-        next = '?page={}'.format(page.next_page_number())
-    else:
-        next = ''
-
+    if category_slug: #есть наш слаг не пустой и пользователь выбрал какую то категорию
+        category = get_object_or_404(Category, slug=category_slug) #берем категории по слагу
+        products = products.filter(category=category) # берем все продукты с данной категории
     context = {
         'category': category,
         'categories': categories,
-        'products': page,
-        'is_paginated': is_paginated,
-        'next': next,
-        'prev_url': prev_url,
-    }
+        'products': products
+        }
 
     return render(request, 'products.html', context)
 
 
 def product_detail(request, id, slug):
     product = get_object_or_404(Product, slug=slug, id=id, status=True)
-    return render(request, 'product_detail.html', context={'product': product})
+    cart_product_form = CartAddProductForm()
+    return render(request, 'product_detail.html', context={'product': product,
+                                                           'cart_product_form': cart_product_form
+                                                           })

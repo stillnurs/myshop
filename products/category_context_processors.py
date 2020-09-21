@@ -2,5 +2,5 @@ from .models import Category
 
 
 def category(request):
-	categories = Category.objects.all()
-	return {'categories': categories}
+    categories = Category.objects.all()
+    return {'categories': categories}

@@ -42,7 +42,7 @@
 				<div class="span8">
 					<div class="account pull-right">
 						<ul class="user-menu">				
-							<li><a href="{%url 'product-list'}">Главная</a></li>
+							<li><a href="{% url 'product-list' %}">Главная</a></li>
 
 
 							<li>
@@ -57,13 +57,11 @@
 								{%endif%}
 								{%endwith%}
 							</li>
-
-
 							<li><a href="checkout.html">Checkout</a></li>					
 							<li>
 								{% if request.user.is_authenticated %}
 									{{request.user.first_name}}<a href="{%url 'logout' %}">Выйти</a>
-								<a href="{% url 'password_change'%}"></a>
+									<a href="{%url 'password_change'%}">Изменить пароль</a>
 								{%else%}
 									<a href="{%url 'login' %}">Войти</a>
 								{%endif%}
@@ -82,7 +80,7 @@
 		<div id="wrapper" class="container">
 			<section class="navbar main-menu">
 				<div class="navbar-inner main-menu">				
-					<a href="index.html" class="logo pull-left"><img src="{%static 'themes/images/logo.png' %}" class="site_logo" alt=""></a>
+					<a href="{% url 'product-list' %}" class="logo pull-left"><img src="{%static 'themes/images/logo.png' %}" class="site_logo" alt=""></a>
 					<nav id="menu" class="pull-right">
 						<ul>
 							<li><a href="./products.html">Woman</a>					

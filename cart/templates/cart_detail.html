@@ -1,61 +1,58 @@
-{% extends 'base.html' %}
+{%extends 'base.html'%}
+{%block title%}
+	Корзина
+{%endblock%}
 
-{% block title %}
-    Корзина
-{% endblock %}
+{%block content%}
+					<div class="span9">					
+						<h4 class="title"><span class="text"><strong>Your</strong> Cart</span></h4>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Фото</th>
+									<th>Название товара</th>
+									<th>Количество</th>
+									<th>Цена товара</th>
+									<th>Общая цена</th>
+									<th>Удалить</th>
+								</tr>
+							</thead>
+							<tbody>
+							{%for item in cart%}
+							{% with product=item.product %}
+								<tr>
+									<td><a href="{{product.get_absolute_url}}"><img alt="NoPhoto" src="{{product.image.url}}"></a></td>
+									<td>{{product.name}}</td>
+									<td>
+										<form action="{% url 'cart_add' product.id %}" method="post">
+										{{ item.update_quantity_form.quantity }}
+										{{ item.update_quantity_form.update }}
+										<input type="submit" value="Update">
+										{% csrf_token %}
+										</form>
+									</td>
+									<td>${{item.price}}</td>
+									<td>${{item.total_price}}</td>
+									<td> <a href="{% url 'cart_remove' product.id%}">Удалить</a></td>
+								</tr>
+							{% endwith %}
+							{% endfor %}
+							</tbody>
+						</table>
+						<hr>
+						<p class="cart-total right">
+							<strong>Общая сумма</strong>:${{cart.get_total_price}}<br>
+						</p>
+						<hr/>
+						<p class="buttons center">				
+							<button class="btn" type="button">Update</button>
+							<button class="btn" type="button" ><a href="{%url 'product-list'%}">Продолжи покупку, лох!</a></button>
+							<button class="btn btn-inverse" type="submit" id="checkout">
+								<a href="{%url 'order_create'%}">
+									Оформить заказ
+								</a>
+							</button>
+						</p>					
+					</div>
 
- {% block content %}
-
-		<div class="span9">
-			<h4 class="title"><span class="text"><strong>Your</strong> Cart</span></h4>
-			<table class="table table-striped">
-				<thead>
-				<tr>
-					<th>Фото</th>
-					<th>Название</th>
-					<th>Количество</th>
-					<th>Цена</th>
-					<th>Общая цена</th>
-					<th>Удалить</th>
-				</tr>
-				</thead>
-				<tbody>
-
-				{% for item in cart %}
-					{% with product=item.product %}
-				<tr>
-					<td><a href="{{product.get_absolute_url}}"><img alt="NoPhoto" src="{{product.image.url}}"></a></td>
-					<td>{{product.name}}</td>
-					<td>
-						<form action="{% url 'cart_add' product.id%}" method="post">
-							{{ item.update_quantity_form.quantity }}
-							{{ item.update_quantity_form.update }}
-							<input type="submit" value="Обновить">
-							{% csrf_token %}
-						</form>
-					</td>
-					<td>${{item.price}}</td>
-					<td>${{item.total_price}}</td>
-					<td><a href="{% url 'cart_remove' product.id %}">Удалить</a></td>
-				</tr>
-					{% endwith %}
-				{% endfor %}
-
-				</tbody>
-			</table>
-
-			<hr>
-			<p class="cart-total right">
-				<strong>Общая сумма</strong>:	$ {{cart.get_total_price}}<br>
-			</p>
-			<hr/>
-			<p class="buttons center">
-				<button class="btn" type="button">Обновить</button>
-				<button class="btn" type="button"><a href="{% url 'product-list' %}">Продолжить покупку</a></button>
-				<button class="btn btn-inverse" type="submit" id="checkout">
-					<a href="{% url 'order_create' %}">Оформить заказ</a></button>
-			</p>
-		</div>
-
-
-{% endblock %}
+{%endblock%}
